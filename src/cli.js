@@ -4,12 +4,24 @@ import pegaArquivo from "../index.js";
 
 const caminho = process.argv
 
-function imprimeLista(resultado) {
-    console.log(chalk.yellow('Lista de Links:', resultado));
+function imprimeLista(resultado, identificador) {
+    console.log(
+        chalk.yellow('Lista de Links:'),
+        chalk.green.bgGreen(identificador),
+        resultado);
 }
 
 async function processaTexto(argumentos) {
-    const caminho = argumentos[2]
+    const caminho = argumentos[2];
+
+    try{
+        fs.lstatSync(caminho)
+    } catch (erro){
+        if (erro.code === "ENOENT") {
+            console.log(chalk.red('arquivo ou diretório não existe'));
+            return
+        }
+    }
 
     if (fs.lstatSync(caminho).isFile()) {
         const resultado = await pegaArquivo(argumentos[2])
@@ -24,6 +36,3 @@ async function processaTexto(argumentos) {
 }
 
 processaTexto(caminho)
-
-
-// adicionando uma biblioteca que diferencie um diretório de um arquivo
