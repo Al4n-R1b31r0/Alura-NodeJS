@@ -4,7 +4,7 @@ import pegaArquivo from "../index.js";
 
 const caminho = process.argv
 
-function imprimeLista(resultado, identificador) {
+function imprimeLista(resultado, identificador = '') {
     console.log(
         chalk.yellow('Lista de Links:'),
         chalk.green.bgGreen(identificador),
